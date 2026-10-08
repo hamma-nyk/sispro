@@ -1,0 +1,9 @@
+# payroll-app/config/.htaccess
+Order Deny,Allow
+Deny from all
+
+# Melindungi file database secara spesifik
+<FilesMatch "\.(db|sqlite)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>

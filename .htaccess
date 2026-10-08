@@ -1,0 +1,23 @@
+# .htaccess
+Options -Indexes
+RewriteEngine On
+
+# Blok akses langsung ke file database & kredensial
+<FilesMatch "\.(sqlite|db|conf|log|ini|json|yaml|env|bak)$">
+    Require all denied
+</FilesMatch>
+
+# Blok akses langsung ke folder sensitif
+RedirectMatch 403 ^/(config|includes|cron|logs)/.*\.php$
+
+# Blok file sensitive spesifik
+<Files "database.php">
+    Require all denied
+</Files>
+
+# Header keamanan
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

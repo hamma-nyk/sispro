@@ -1,14 +1,17 @@
-<?php
+﻿<?php
 if (basename($_SERVER['SCRIPT_NAME'] ?? '') === 'database.php') {
     http_response_code(403);
     die("Forbidden");
 }
 
-$host   = '192.168.10.16'; 
-$port   = '5432';
-$dbname = 'ikoit_sispro';
-$user   = 'postgres';
-$pass   = 'postgres';
+$env_path = dirname(__DIR__) . '/.env';
+$env = file_exists($env_path) ? parse_ini_file($env_path, false, INI_SCANNER_RAW) : [];
+
+$host   = $env['PG_SISPRO_HOST']; 
+$port   = $env['PG_SISPRO_PORT'];
+$dbname = $env['PG_SISPRO_DB'];
+$user   = $env['PG_SISPRO_USER'];
+$pass   = $env['PG_SISPRO_PASS'];
 
 try {
     $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
@@ -20,11 +23,11 @@ try {
 }
 
 // Koneksi ke PostgreSQL HRMS (NBIM)
-$pg_hrms_host   = '192.168.10.12'; // Asumsi IP yang sama, ubah jika beda
-$pg_hrms_port   = '5432';
-$pg_hrms_dbname = 'NBIM';
-$pg_hrms_user   = 'postgres';
-$pg_hrms_pass   = '89$CrM@*nBi_';
+$pg_hrms_host   = $env['PG_HRMS_HOST'];
+$pg_hrms_port   = $env['PG_HRMS_PORT'];
+$pg_hrms_dbname = $env['PG_HRMS_DB'];
+$pg_hrms_user   = $env['PG_HRMS_USER'];
+$pg_hrms_pass   = $env['PG_HRMS_PASS'];
 
 try {
     $dsn_hrms = "pgsql:host=$pg_hrms_host;port=$pg_hrms_port;dbname=$pg_hrms_dbname";
@@ -37,11 +40,11 @@ try {
 }
 
 // Koneksi ke PostgreSQL CRM
-$pg_crm_host   = '192.168.3.15';
-$pg_crm_port   = '3925';
-$pg_crm_dbname = 'CRM2020'; // Asumsi default, sesuaikan kalau ada db spesifik
-$pg_crm_user   = 'postgres';
-$pg_crm_pass   = '89$CrM@*nBi_';
+$pg_crm_host   = $env['PG_CRM_HOST'];
+$pg_crm_port   = $env['PG_CRM_PORT'];
+$pg_crm_dbname = $env['PG_CRM_DB'];
+$pg_crm_user   = $env['PG_CRM_USER'];
+$pg_crm_pass   = $env['PG_CRM_PASS'];
 
 try {
     $dsn_crm = "pgsql:host=$pg_crm_host;port=$pg_crm_port;dbname=$pg_crm_dbname";
@@ -54,7 +57,8 @@ try {
 }
 
 // Koneksi ke MS Access (File MDB Absensi)
-$mdb_path = '\\\\192.168.10.10\\Absensi\\C_ABSEN.mdb';
+$mdb_path = $env['MDB_ABSENSI_PATH'] ?? '\\\\192.168.10.10\\Absensi\\C_ABSEN.mdb';
+
 try {
     $dsn_mdb = "odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=$mdb_path;";
     $pdo_mdb = new PDO($dsn_mdb);
@@ -66,14 +70,12 @@ try {
 }
 
 // Koneksi ke SQL Server (Database d_master)
-// Sesuaikan kredensial dan IP dengan server SQL Server yang digunakan
-$ms_host   = '192.168.10.11'; // Ganti jika beda IP
-$ms_dbname = 'D_Master';
-$ms_user   = 'sa';
-$ms_pass   = 'PASSWORDSETUPSRVNUSANTARASIDIANYA'; // Sesuaikan
+$ms_host   = $env['MS_SQL_HOST'];
+$ms_dbname = $env['MS_SQL_DB'];
+$ms_user   = $env['MS_SQL_USER'];
+$ms_pass   = $env['MS_SQL_PASS'];
 
 try {
-    // Bisa pakai odbc: atau sqlsrv: (di sini pakai sqlsrv sebagai standar PHP Windows, ubah ke odbc jika driver yang ada odbc)
     // $dsn_ms = "sqlsrv:Server=$ms_host;Database=$ms_dbname";
     // Jika pakai ODBC:
     $dsn_ms = "odbc:Driver={SQL Server};Server=$ms_host;Database=$ms_dbname;";
@@ -192,7 +194,8 @@ try {
             ('tarikan_jadwal_kunjungan', 'Jadwal Kunjungan', '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\" ry=\"2\"/><line x1=\"16\" x2=\"16\" y1=\"2\" y2=\"6\"/><line x1=\"8\" x2=\"8\" y1=\"2\" y2=\"6\"/><line x1=\"3\" x2=\"21\" y1=\"10\" y2=\"10\"/><path d=\"M8 14h.01\"/><path d=\"M12 14h.01\"/><path d=\"M16 14h.01\"/><path d=\"M8 18h.01\"/><path d=\"M12 18h.01\"/><path d=\"M16 18h.01\"/></svg>', 'tarikan_jadwal_kunjungan.php', 'CRM', 51),
             ('tarikan_data_outlet', 'Data Outlet', '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 9 12 2 21 9v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><polyline points=\"9 22 9 12 15 12 15 22\"/></svg>', 'tarikan_data_outlet.php', 'CRM', 52),
             ('tarikan_data_distributor', 'Data Distributor', '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2\"/><path d=\"M15 18H9\"/><path d=\"M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14\"/><circle cx=\"17\" cy=\"18\" r=\"2\"/><circle cx=\"7\" cy=\"18\" r=\"2\"/></svg>', 'tarikan_data_distributor.php', 'CRM', 53),
-            ('crud_absensi', 'Edit Data Mesin Absen', '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z\"/><polyline points=\"14 2 14 8 20 8\"/><line x1=\"16\" y1=\"13\" x2=\"8\" y2=\"13\"/><line x1=\"16\" y1=\"17\" x2=\"8\" y2=\"17\"/><line x1=\"10\" y1=\"9\" x2=\"8\" y2=\"9\"/></svg>', 'crud_absensi.php', 'ABSENSI', 60)
+            ('crud_absensi', 'Edit Data Mesin Absen', '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z\"/><polyline points=\"14 2 14 8 20 8\"/><line x1=\"16\" y1=\"13\" x2=\"8\" y2=\"13\"/><line x1=\"16\" y1=\"17\" x2=\"8\" y2=\"17\"/><line x1=\"10\" y1=\"9\" x2=\"8\" y2=\"9\"/></svg>', 'crud_absensi.php', 'ABSENSI', 60),
+            ('hitung_piutang', 'Hitung Ulang Kartu Piutang', '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12V7H5a2 2 0 0 1 0-4h14v4\"/><path d=\"M3 5v14a2 2 0 0 0 2 2h16v-5\"/><path d=\"M18 12a2 2 0 0 0 0 4h4v-4Z\"/></svg>', 'hitung_piutang.php', 'SisPro', 99)
         ");
     }
 } catch(PDOException $e) {

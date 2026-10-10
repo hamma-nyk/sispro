@@ -1,5 +1,5 @@
 <?php
-session_name('APP_MESIN');
+session_name('APP_ITSUPPORT');
 session_start();
 session_unset();
 session_destroy();

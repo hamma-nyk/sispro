@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     ini_set('session.cookie_httponly', 1);
     ini_set('session.use_only_cookies', 1);
-    session_name('APP_MESIN');
+    session_name('APP_ITSUPPORT');
     session_start();
 }
 

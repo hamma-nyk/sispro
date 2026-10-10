@@ -20,3 +20,27 @@ document.addEventListener('keydown', function(e) {
         }
     }
 });
+
+window.addEventListener('beforeunload', () => {
+    const nav = document.querySelector('#sidebar nav');
+    if (nav) sessionStorage.setItem('sidebarScrollPos', nav.scrollTop);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.querySelector('#sidebar nav');
+    if (nav) {
+        // Record scroll position instantly when a sidebar link is clicked
+        nav.querySelectorAll('a.sidebar-link').forEach(link => {
+            link.addEventListener('click', () => {
+                sessionStorage.setItem('sidebarScrollPos', nav.scrollTop);
+            });
+        });
+
+        const pos = sessionStorage.getItem('sidebarScrollPos');
+        if (pos) {
+            setTimeout(() => {
+                nav.scrollTop = parseInt(pos, 10);
+            }, 10);
+        }
+    }
+});

@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<script src="assets/js/script.js"></script>
+<script src="assets/js/script.js?v=<?= filemtime(__DIR__ . '/../assets/js/script.js') ?>"></script>
 <?php if (isset($_SESSION['global_error'])): ?>
 <div id="error-toast" class="fixed top-4 right-4 z-50 max-w-sm animate-in slide-in-from-top">
     <div class="rounded-lg border border-destructive/50 bg-destructive/10 p-4 shadow-lg">

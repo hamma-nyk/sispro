@@ -394,7 +394,7 @@ function closeModal() {
     document.getElementById('modal-module').classList.add('hidden');
     document.getElementById('icon-picker').classList.add('hidden');
     if (window.location.search.includes('edit=')) {
-        window.history.replaceState({}, '', 'master_module.php');
+        window.history.replaceState({}, '', 'master_module');
     }
 }
 

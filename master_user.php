@@ -138,7 +138,7 @@ require_once 'includes/header.php';
             </div>
         </form>
         <?php if($search !== ''): ?>
-        <a href="master_user.php" class="inline-flex items-center justify-center rounded-md h-9 px-3 border text-sm hover:bg-accent transition-colors">Reset</a>
+        <a href="master_user" class="inline-flex items-center justify-center rounded-md h-9 px-3 border text-sm hover:bg-accent transition-colors">Reset</a>
         <?php endif; ?>
     </div>
 
@@ -259,7 +259,7 @@ require_once 'includes/header.php';
 function closeModal() {
     document.getElementById('modal-create').classList.add('hidden');
     if (window.location.search.includes('edit=')) {
-        window.history.replaceState({}, '', 'master_user.php');
+        window.history.replaceState({}, '', 'master_user');
     }
 }
 document.addEventListener('keydown', function(e) {

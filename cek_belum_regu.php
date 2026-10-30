@@ -143,7 +143,7 @@ require_once 'includes/header.php';
                     Cari
                 </button>
                 <?php if($search !== ''): ?>
-                <a href="cek_belum_regu.php" class="inline-flex items-center justify-center rounded-md border px-3 text-sm hover:bg-muted transition-colors h-9">
+                <a href="cek_belum_regu" class="inline-flex items-center justify-center rounded-md border px-3 text-sm hover:bg-muted transition-colors h-9">
                     Reset
                 </a>
                 <?php endif; ?>

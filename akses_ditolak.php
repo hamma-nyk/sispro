@@ -16,7 +16,7 @@ require_once 'includes/header.php';
         <h2 class="text-lg font-semibold">Akses Ditolak</h2>
         <p class="text-sm text-muted-foreground max-w-md">Anda tidak memiliki wewenang untuk mengakses halaman ini. Hubungi Admin IT jika ini kesalahan sistem.</p>
     </div>
-    <a href="index.php" class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors h-9">
+    <a href="./" class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors h-9">
         Kembali ke Dashboard
     </a>
 </div>

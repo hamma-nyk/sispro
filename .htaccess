@@ -2,20 +2,36 @@
 Options -Indexes
 RewriteEngine On
 
-# Blok akses langsung ke file database & kredensial
-<FilesMatch "\.(sqlite|db|conf|log|ini|json|yaml|env|bak)$">
+# 1. Blok file tersembunyi (.env, .git, dll)
+RewriteRule (^|/)\.(?!well-known) - [F]
+
+# 2. Blok akses langsung ke file konfigurasi & database
+<FilesMatch "\.(sqlite|db|conf|log|ini|json|yaml|yml|env|bak|sql)$">
     Require all denied
 </FilesMatch>
 
-# Blok akses langsung ke folder sensitif
-RedirectMatch 403 ^/(config|includes|cron|logs)/.*\.php$
-
-# Blok file sensitive spesifik
+# 3. Blok akses ke direktori sensitif
+RedirectMatch 403 ^/(config|includes|cron|logs)(/.*)?$
 <Files "database.php">
     Require all denied
 </Files>
 
-# Header keamanan
+# 4. Redirect index.php ke root /
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+index\.php[\s?] [NC]
+RewriteRule ^ / [R=301,L]
+
+# 5. Redirect langsung .php ke URL bersih (301)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+([^\s?]+)\.php[\s?] [NC]
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteRule ^ /%1 [R=301,L]
+
+# 6. Rewrite URL bersih ke file .php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.php -f [OR]
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [L,QSA]
+
+# 7. Header keamanan
 <IfModule mod_headers.c>
     Header always set X-Content-Type-Options "nosniff"
     Header always set X-Frame-Options "SAMEORIGIN"

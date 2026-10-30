@@ -3,5 +3,5 @@ session_name('APP_ITSUPPORT');
 session_start();
 session_unset();
 session_destroy();
-header("Location: login.php");
+header("Location: login");
 exit;

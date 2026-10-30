@@ -154,7 +154,7 @@ require_once 'includes/header.php';
                         Cari Data
                     </button>
                     <?php if($docno_search !== '' || $nik_search !== ''): ?>
-                    <a href="reset_mutasi_promosi.php" class="inline-flex items-center justify-center rounded-md border px-3 py-2 text-sm hover:bg-muted transition-colors h-9">
+                    <a href="reset_mutasi_promosi" class="inline-flex items-center justify-center rounded-md border px-3 py-2 text-sm hover:bg-muted transition-colors h-9">
                         Reset
                     </a>
                     <?php endif; ?>

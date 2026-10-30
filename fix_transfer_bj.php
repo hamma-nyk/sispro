@@ -133,7 +133,7 @@ require_once 'includes/header.php';
                     Cek Nomor Saat Ini
                 </button>
                 <?php if($search_prefix !== '' || $search_document !== ''): ?>
-                <a href="fix_transfer_bj.php" class="inline-flex w-full items-center justify-center rounded-md text-muted-foreground hover:bg-muted border border-transparent hover:border-border transition-colors h-9 text-sm">Reset</a>
+                <a href="fix_transfer_bj" class="inline-flex w-full items-center justify-center rounded-md text-muted-foreground hover:bg-muted border border-transparent hover:border-border transition-colors h-9 text-sm">Reset</a>
                 <?php endif; ?>
             </form>
 

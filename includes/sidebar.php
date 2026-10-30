@@ -30,7 +30,7 @@ foreach ($sidebarModules as $m) {
 
 <aside id="sidebar" class="sidebar-mobile md:translate-x-0 fixed inset-y-0 left-0 z-40 flex w-[260px] flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
     <div class="flex h-14 items-center border-b px-6">
-        <a href="index.php" class="flex items-center gap-2">
+        <a href="./" class="flex items-center gap-2">
             <img src="assets/img/nbi.png" class="h-7 w-auto dark:hidden" alt="Logo">
             <img src="assets/img/nbi_dark.png" class="h-7 w-auto hidden dark:block" alt="Logo Dark">
             <span class="font-semibold text-sm tracking-tight text-foreground">IT Support</span>
@@ -38,7 +38,10 @@ foreach ($sidebarModules as $m) {
     </div>
 
     <nav class="flex-1 overflow-y-auto px-3 py-4">
-        <?php foreach($grupMenu as $grup => $items): ?>
+        <?php 
+        $currentScript = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+        foreach($grupMenu as $grup => $items): 
+        ?>
             <?php if($grup !== ''): ?>
             <div class="mt-6">
                 <p class="px-3 mb-2 text-xs font-medium text-muted-foreground uppercase tracking-wider"><?= e($grup) ?></p>
@@ -47,8 +50,13 @@ foreach ($sidebarModules as $m) {
             <div class="space-y-1">
             <?php endif; ?>
 
-            <?php foreach($items as $m): ?>
-                <a href="<?= e($m['url']) ?>" class="sidebar-link flex items-center gap-3 rounded-md px-3 py-2 text-sm <?= $currentPage == $m['url'] ? 'active font-medium text-foreground' : 'text-muted-foreground hover:text-foreground' ?>">
+            <?php foreach($items as $m): 
+                $cleanUrl = preg_replace('/\.php$/', '', $m['url'] ?? '');
+                $targetScript = pathinfo($m['url'] ?? '', PATHINFO_FILENAME);
+                $moduleHref = ($cleanUrl === 'index' || $cleanUrl === '') ? './' : $cleanUrl;
+                $isActive = ($currentScript === $targetScript);
+            ?>
+                <a href="<?= e($moduleHref) ?>" class="sidebar-link flex items-center gap-3 rounded-md px-3 py-2 text-sm <?= $isActive ? 'active font-medium text-foreground' : 'text-muted-foreground hover:text-foreground' ?>">
                     <?= $m['icon'] ?>
                     <?= e($m['nama']) ?>
                 </a>
@@ -65,7 +73,7 @@ foreach ($sidebarModules as $m) {
         <div class="mt-6">
             <p class="px-3 mb-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">Akun</p>
             <div class="space-y-1">
-                <a href="logout.php" class="sidebar-link flex items-center gap-3 rounded-md px-3 py-2 text-sm text-destructive hover:bg-destructive/10">
+                <a href="logout" class="sidebar-link flex items-center gap-3 rounded-md px-3 py-2 text-sm text-destructive hover:bg-destructive/10">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
                     Keluar Sistem
                 </a>

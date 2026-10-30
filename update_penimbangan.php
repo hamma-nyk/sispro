@@ -153,7 +153,7 @@ require_once 'includes/header.php';
                     Cari Data
                 </button>
                 <?php if($search_nopol !== '' || $search_docno !== ''): ?>
-                <a href="update_penimbangan.php" class="inline-flex w-full items-center justify-center rounded-md text-muted-foreground hover:bg-muted border border-transparent hover:border-border transition-colors h-9 text-sm">
+                <a href="update_penimbangan" class="inline-flex w-full items-center justify-center rounded-md text-muted-foreground hover:bg-muted border border-transparent hover:border-border transition-colors h-9 text-sm">
                     Reset
                 </a>
                 <?php endif; ?>

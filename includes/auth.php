@@ -11,7 +11,7 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
-    header("Location: login.php");
+    header("Location: login");
     exit;
 }
 
@@ -21,7 +21,7 @@ if (!isset($_SESSION['user_agent'])) {
     if (($_SESSION['user_agent'] ?? '') !== ($_SERVER['HTTP_USER_AGENT'] ?? '')) {
         session_unset();
         session_destroy();
-        header("Location: login.php");
+        header("Location: login");
         exit;
     }
 }
@@ -72,9 +72,10 @@ function hasModule($kode_module) {
 
 function requireModule($kode_module) {
     if (!hasModule($kode_module)) {
-        if (basename($_SERVER['PHP_SELF']) !== 'akses_ditolak.php') {
+        $cur = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+        if ($cur !== 'akses_ditolak') {
             $_SESSION['global_error'] = "Akses Ditolak! Anda tidak memiliki akses ke modul ini.";
-            header("Location: akses_ditolak.php");
+            header("Location: akses_ditolak");
             exit;
         }
     }

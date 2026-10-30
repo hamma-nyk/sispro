@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once 'config/database.php';
 
 if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
-    header("Location: index.php");
+    header("Location: ./");
     exit;
 }
 
@@ -90,7 +90,7 @@ if (isset($_POST['login']) && !$error) {
 
         write_security_log('info', "Login berhasil: {$data['username']}");
 
-        header("Location: index.php");
+        header("Location: ./");
         exit;
     } else {
         $_SESSION['login_attempts'] = ($_SESSION['login_attempts'] ?? 0) + 1;

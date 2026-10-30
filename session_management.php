@@ -259,7 +259,7 @@ require_once 'includes/header.php';
                             class="flex h-8 w-full rounded-md border border-input bg-background pl-8 pr-3 py-1 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring uppercase">
                     </div>
                     <?php if($search !== ''): ?>
-                        <a href="session_management.php" class="inline-flex items-center justify-center rounded-md border h-8 px-3 text-xs font-medium hover:bg-accent">Reset</a>
+                        <a href="session_management" class="inline-flex items-center justify-center rounded-md border h-8 px-3 text-xs font-medium hover:bg-accent">Reset</a>
                     <?php endif; ?>
                 </form>
             </div>

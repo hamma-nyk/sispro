@@ -247,7 +247,7 @@ require_once 'includes/header.php';
 function closeModal() {
     document.getElementById('modal-role').classList.add('hidden');
     if (window.location.search.includes('edit=')) {
-        window.history.replaceState({}, '', 'master_role.php');
+        window.history.replaceState({}, '', 'master_role');
     }
 }
 document.addEventListener('keydown', function(e) {
